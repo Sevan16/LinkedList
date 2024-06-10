@@ -1,4 +1,4 @@
-#include "List.h"
+ï»¿#include "List.h"
 #include <iostream>
 #include <sstream>
 using namespace std;
@@ -24,6 +24,18 @@ LinkedList::~LinkedList() {
     this->clear();
 }
 
+int LinkedList::size() const {
+    int count = 0;
+    Node* current = this->head;
+
+    while (current != nullptr) {
+        ++count;
+        current = current->next;
+    }
+
+    return count;
+}
+
 void LinkedList::pushFront(int data) {
     Node* newNode = new Node(data);
     newNode->next = this->head;
@@ -46,7 +58,7 @@ void LinkedList::pushBack(int data) {
 
 void LinkedList::popFront() {
     if (this->head == nullptr) {
-        throw logic_error("Ñïèñîê ïóñòîé!");
+        throw logic_error("Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð¿ÑƒÑÑ‚Ð¾Ð¹!");
     }
     Node* temp = this->head;
     this->head = this->head->next;
@@ -55,7 +67,7 @@ void LinkedList::popFront() {
 
 void LinkedList::popBack() {
     if (this->head == nullptr) {
-        throw logic_error("Ñïèñîê ïóñòîé!");;
+        throw logic_error("Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð¿ÑƒÑÑ‚Ð¾Ð¹!");;
     }
     if (this->head->next == nullptr) {
         delete this->head;
@@ -74,6 +86,46 @@ void LinkedList::popBack() {
 void LinkedList::clear() {
     while (this->head != nullptr) {
         this->popFront();
+    }
+}
+
+void LinkedList::insert(int data, int position) {
+    if (position < 0 || position > this->size()) {
+        throw logic_error("ÐÐµÐ²ÐµÑ€Ð½Ñ‹Ð¹ Ð¸Ð½Ð´ÐµÐºÑ Ð¿Ð¾Ð·Ð¸Ñ†Ð¸Ð¸!");
+    }
+
+    Node* newNode = new Node(data);
+    if (position == 0) {
+        newNode->next = this->head;
+        this->head = newNode;
+    }
+    else {
+        Node* current = this->head;
+        for (int i = 0; i < position - 1; ++i) {
+            current = current->next;
+        }
+        newNode->next = current->next;
+        current->next = newNode;
+    }
+}
+
+void LinkedList::remove(int data) {
+    Node* temp = nullptr;
+    Node* current = this->head;
+
+    while (current != nullptr) {
+        if (current->data == data) {
+            if (temp == nullptr) {
+                this->head = current->next;
+            }
+            else {
+                temp->next = current->next;
+            }
+            delete current;
+            break;
+        }
+        temp = current;
+        current = current->next;
     }
 }
 

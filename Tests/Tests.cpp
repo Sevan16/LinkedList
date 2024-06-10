@@ -1,4 +1,4 @@
-#include "CppUnitTest.h"
+﻿#include "CppUnitTest.h"
 #include "../Solver/List.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;

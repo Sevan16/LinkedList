@@ -1,10 +1,11 @@
-#include <iostream>
+﻿#include <iostream>
 #include "../Solver/List.h"
 
 
 int main() {
     LinkedList list;
     list.pushFront(10);
+    list.pushFront(100);
     list.pushFront(20);
     list.pushBack(30);
     list.pushBack(40);
@@ -16,6 +17,12 @@ int main() {
 
     list.popBack();
     cout << "List after popBack: " << list.printList();
+
+    list.insert(25, 2);
+    cout << "List after insert: " << list.printList();
+
+    list.remove(10);
+    cout << "List after remove: " << list.printList();
 
     LinkedList list2{ 1, 2, 3 };
     cout << "ctor initialization: " << list2.printList();
