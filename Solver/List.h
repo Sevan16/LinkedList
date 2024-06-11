@@ -1,4 +1,4 @@
-﻿#pragma once
+﻿
 #include <iostream>
 #include <sstream>
 using namespace std;
@@ -26,9 +26,26 @@ private:
 
 public:
     /**
-     * @brief Конструктор по умолчанию.
-     */
+    * @brief Конструктор по умолчанию.
+    */
     LinkedList();
+    /**
+    * @brief Конструктор копирования.
+    */
+    LinkedList(const LinkedList& other);
+    /**
+    * @brief оператор присваивания копирования.
+    */
+    LinkedList& operator=(const LinkedList& other);
+    /**
+    * @brief Конструктор перемещения.
+    */
+    LinkedList(LinkedList&& other) noexcept;
+    /**
+    * @brief оператор присваивания перемещения
+    */
+    LinkedList& operator=(LinkedList&& other) noexcept;
+
     /**
     * @brief Конструктор со списком инициализации
     * @param list список инициализации
@@ -38,7 +55,6 @@ public:
      * @brief Деструктор списка. Очищает список при удалении объекта.
      */
     ~LinkedList();
-
     /**
     * @brief Добавляет элемент в начало списка.
     * @param data Значение для добавления.
@@ -62,9 +78,16 @@ public:
     void popBack();
 
     int size() const;
-
+    /**
+   * @brief вставляет элемент в указанную позицию
+   * @param значениеи для вставки
+   * @param позиция для вставки
+   */
     void insert(int data, int position);
-
+    /**
+    * @brief удаляет элемент из списка
+    * @param значениеи для удаления
+    */
     void remove(int data);
 
     /**
@@ -79,5 +102,3 @@ public:
      */
     string printList() const;
 };
-
-

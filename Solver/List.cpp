@@ -1,29 +1,53 @@
-﻿#include "List.h"
+﻿#include "../Solver/List.h"
 #include <iostream>
 #include <sstream>
 using namespace std;
+Node::Node(int data) : data{ data }, next{ nullptr } {}
 
-Node::Node(int data) {
-    this->data = data;
-    this->next = nullptr;
-}
+LinkedList::LinkedList() : head{ nullptr } {}
 
-LinkedList::LinkedList() {
-    this->head = nullptr;
-}
-
-LinkedList::LinkedList(initializer_list<int> list) : LinkedList()
-{
-    for (auto& data : list)
-    {
-        this->pushBack(data);
+LinkedList::LinkedList(initializer_list<int> list) : LinkedList() {
+    for (auto& data : list) {
+        pushBack(data);
     }
 }
 
-LinkedList::~LinkedList() {
-    this->clear();
+LinkedList::LinkedList(const LinkedList& other) : LinkedList() {
+    Node* current = other.head;
+    while (current != nullptr) {
+        pushBack(current->data);
+        current = current->next;
+    }
 }
 
+LinkedList& LinkedList::operator=(const LinkedList& other) {
+    if (this != &other) {
+        clear();
+        Node* current = other.head;
+        while (current != nullptr) {
+            pushBack(current->data);
+            current = current->next;
+        }
+    }
+    return *this;
+}
+
+LinkedList::LinkedList(LinkedList&& other) noexcept : head(other.head) {
+    other.head = nullptr;
+}
+
+LinkedList& LinkedList::operator=(LinkedList&& other) noexcept {
+    if (this != &other) {
+        clear();
+        head = other.head;
+        other.head = nullptr;
+    }
+    return *this;
+}
+
+LinkedList::~LinkedList() {
+    clear();
+}
 int LinkedList::size() const {
     int count = 0;
     Node* current = this->head;
@@ -122,11 +146,12 @@ void LinkedList::remove(int data) {
                 temp->next = current->next;
             }
             delete current;
-            break;
+            return;
         }
         temp = current;
         current = current->next;
     }
+    throw logic_error("Элемент не найден");
 }
 
 ostream& operator<<(ostream& ostream, const LinkedList& list) {

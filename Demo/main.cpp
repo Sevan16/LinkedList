@@ -21,7 +21,7 @@ int main() {
     list.insert(25, 2);
     cout << "List after insert: " << list.printList();
 
-    list.remove(10);
+    list.remove(777);
     cout << "List after remove: " << list.printList();
 
     LinkedList list2{ 1, 2, 3 };
